@@ -6,11 +6,11 @@ random.seed()
 class Labirynth:
 	def __init__(self):
 		self.cells = [['#', '#', '#', '#', '#', '#', '#'], \
-			      ['#', '.', '.', '.', '.', '.', '#'], \
-			      ['#', '.', '#', '#', '#', '.', '#'], \
-			      ['#', '.', '#', '.', '#', '.', '#'], \
-			      ['#', '.', '#', '.', '.', '.', '#'], \
-			      ['#', '#', '#', '#', '#', '#', '#']]
+				  ['#', '.', '.', '.', '.', '.', '#'], \
+				  ['#', '.', '#', '#', '#', '.', '#'], \
+				  ['#', '.', '#', '.', '#', '.', '#'], \
+				  ['#', '.', '#', '.', '.', '.', '#'], \
+				  ['#', '#', '#', '#', '#', '#', '#']]
 		self.width = len(self.cells[0])
 		self.height = len(self.cells)
 		
@@ -58,11 +58,11 @@ class LabirynthGame:
 
 	def refresh(self):
 		for i1 in range(self.lab.height):
-		    for i2 in range(self.lab.width):
-		        try:
-		            self.pad.addch(i1, i2, self.lab.cells[i1][i2])
-		        except curses.error:
-		            pass
+			for i2 in range(self.lab.width):
+				try:
+					self.pad.addch(i1, i2, self.lab.cells[i1][i2])
+				except curses.error:
+					pass
 	
 		self.player.draw(self.pad)
 		self.bandit.draw(self.pad)
@@ -77,58 +77,58 @@ class LabirynthGame:
 		self.stdscr.keypad(0)
 		curses.echo()
 		curses.endwin()
-		print "Bye!"
+		print("Bye!")
 		self.done = True
 		
 	def processKeys(self):
-		 code = self.stdscr.getch()
-		 if code == curses.ERR: # no key pressed
-		 	return
-		 if code == curses.KEY_RIGHT:
-		 	self.player.newpos = (self.player.pos[0], self.player.pos[1] + 1)
-		 if code == curses.KEY_LEFT:
-		 	self.player.newpos = (self.player.pos[0], self.player.pos[1] - 1)
-		 if code == curses.KEY_UP:
-		 	self.player.newpos = (self.player.pos[0] - 1, self.player.pos[1])
-		 if code == curses.KEY_DOWN:
-		 	self.player.newpos = (self.player.pos[0] + 1, self.player.pos[1])
-		 	
-		 #if self.lab.cells[self.player.y][self.player.x] == '.':
-		 	#self.lab.cells[self.player.y][self.player.x] = ' '
-		 if code > 256:
-		 	self.notify("Key code pressed: " + str(code))
+		code = self.stdscr.getch()
+		if code == curses.ERR: # no key pressed
 			return
-		 	
-		 char = chr(code)
-		 if char == 'q':
-		 	self.exit()
-		 	return
-		 self.notify("Key pressed:"+char)
- 	
- 	def processMoves(self):
-  		d = random.randrange(4)
-  		if d == 0:
-  			self.bandit.newpos = (self.bandit.pos[0] - 1, self.bandit.pos[1])
-  		if d == 1:
-  			self.bandit.newpos = (self.bandit.pos[0], self.bandit.pos[1] + 1)
-  		if d == 2:
-  			self.bandit.newpos = (self.bandit.pos[0], self.bandit.pos[1] - 1)
-  		if d == 3:
-  			self.bandit.newpos = (self.bandit.pos[0] + 1, self.bandit.pos[1])
- 		self.processHuman(self.player)
- 		self.processHuman(self.bandit)
- 		if self.player.pos == self.bandit.pos:
- 			self.exit()
- 		if self.lab.cells[self.player.pos[0]][self.player.pos[1]] == '.':
- 			self.lab.cells[self.player.pos[0]][self.player.pos[1]] = ' '
- 			
- 	
- 	def processHuman(self, human):
- 		newLabCell = self.lab.cells[human.newpos[0]][human.newpos[1]]
- 		if newLabCell != '#':
- 			human.pos = human.newpos
- 	
- 	def notify(self, line):
+		if code == curses.KEY_RIGHT:
+			self.player.newpos = (self.player.pos[0], self.player.pos[1] + 1)
+		if code == curses.KEY_LEFT:
+			self.player.newpos = (self.player.pos[0], self.player.pos[1] - 1)
+		if code == curses.KEY_UP:
+			self.player.newpos = (self.player.pos[0] - 1, self.player.pos[1])
+		if code == curses.KEY_DOWN:
+			self.player.newpos = (self.player.pos[0] + 1, self.player.pos[1])
+			
+		#if self.lab.cells[self.player.y][self.player.x] == '.':
+			#self.lab.cells[self.player.y][self.player.x] = ' '
+		if code > 256:
+			self.notify("Key code pressed: " + str(code))
+			return
+			
+		char = chr(code)
+		if char == 'q':
+			self.exit()
+			return
+		self.notify("Key pressed:"+char)
+	
+	def processMoves(self):
+		d = random.randrange(4)
+		if d == 0:
+			self.bandit.newpos = (self.bandit.pos[0] - 1, self.bandit.pos[1])
+		if d == 1:
+			self.bandit.newpos = (self.bandit.pos[0], self.bandit.pos[1] + 1)
+		if d == 2:
+			self.bandit.newpos = (self.bandit.pos[0], self.bandit.pos[1] - 1)
+		if d == 3:
+			self.bandit.newpos = (self.bandit.pos[0] + 1, self.bandit.pos[1])
+		self.processHuman(self.player)
+		self.processHuman(self.bandit)
+		if self.player.pos == self.bandit.pos:
+			self.exit()
+		if self.lab.cells[self.player.pos[0]][self.player.pos[1]] == '.':
+			self.lab.cells[self.player.pos[0]][self.player.pos[1]] = ' '
+			
+	
+	def processHuman(self, human):
+		newLabCell = self.lab.cells[human.newpos[0]][human.newpos[1]]
+		if newLabCell != '#':
+			human.pos = human.newpos
+	
+	def notify(self, line):
 		self.stdscr.addstr(0, 0, " "*100, curses.A_BOLD)
 		self.stdscr.addstr(0, 0, "Warning: "+str(line), curses.A_BOLD)
 		
